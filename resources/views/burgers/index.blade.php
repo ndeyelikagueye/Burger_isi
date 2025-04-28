@@ -149,7 +149,12 @@
                 <a href="{{ route('orders.index') }}" class="btn btn-warning btn-lg shadow-sm">
                     <i class="fas fa-list"></i> Gérer les Commandes
                 </a>
-
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-danger btn-lg shadow-sm me-2">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </button>
+                </form>
             @endif
 
             <!-- Boutons spécifiques aux clients -->
@@ -165,13 +170,14 @@
                         <span class="badge bg-danger">{{ count(session()->get('cart')) }}</span>
                     @endif
                 </a>
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-danger btn-lg shadow-sm me-2">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </button>
+                </form>
             @endif
-            <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                @csrf
-                <button type="submit" class="btn btn-danger btn-lg shadow-sm me-2">
-                    <i class="fas fa-sign-out-alt"></i> Déconnexion
-                </button>
-            </form>
+
             <!-- Boutons pour les utilisateurs non connectés -->
             @if(!Auth::check())
                 <a href="{{ route('login') }}" class="btn btn-primary btn-lg shadow-sm me-2">
@@ -281,7 +287,13 @@
                 </div>
             @endforeach
         </div>
+
+        <!-- Affichage de la pagination -->
+        <div class="d-flex justify-content-center mt-4">
+            {{ $burgers->links() }}
+        </div>
     @endif
+
     <!-- Message pour les visiteurs non connectés -->
     @if(!Auth::check())
         <div class="row">
@@ -319,13 +331,9 @@
                 </div>
             @endforeach
         </div>
-        <div class="alert alert-info text-center mt-4">
-            <h4>Vous souhaitez commander nos délicieux burgers?</h4>
-            <p>Connectez-vous ou créez un compte pour pouvoir commander.</p>
-            <div class="mt-3">
-                <a href="{{ route('login') }}" class="btn btn-primary me-2">Se connecter</a>
-                <a href="{{ route('register') }}" class="btn btn-secondary">Créer un compte</a>
-            </div>
+        <!-- Affichage de la pagination -->
+        <div class="d-flex justify-content-center mt-4">
+            {{ $burgers->links() }}
         </div>
     @endif
 </div>

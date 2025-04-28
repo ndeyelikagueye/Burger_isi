@@ -30,22 +30,16 @@ class BurgersController extends Controller
             $query->where('price', '<=', $request->max_price);
         }
 
+        // Appliquer le filtre pour les burgers non archivés et paginer les résultats
+        $burgers = $query->where('is_archived', false)->paginate(9);
+
         // Récupérer les commandes de l'utilisateur connecté
         $orders = Orders::where('user_id', Auth::id())->get();
 
-        // Récupérer les burgers (si nécessaire)
-        $burgers = Burgers::where('is_archived', false)->get();
-
-        $burgers = $query->where('is_archived', false)->get(); // Récupérer les burgers non archivés
-
         // Passer les variables à la vue
         return view('burgers.index', compact('burgers', 'orders'));
-
-
-
-
-
     }
+
 
     /**
      * Show the form for creating a new resource.
